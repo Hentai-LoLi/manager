@@ -1,5 +1,7 @@
 HELP.md
 target/
+.mvn
+manager.iml
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -33,6 +35,3 @@ build/
 .vscode/
 
 
-target/
-.mvn
-manager.iml

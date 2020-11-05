@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.key.mapper.StoreMapper">
+  <resultMap id="BaseResultMap" type="com.key.entity.Store">
+    <id column="store_id" jdbcType="INTEGER" property="storeId" />
+    <result column="store_uid" jdbcType="INTEGER" property="storeUid" />
+    <result column="store_name" jdbcType="VARCHAR" property="storeName" />
+    <result column="store_location" jdbcType="VARCHAR" property="storeLocation" />
+    <result column="store_type" jdbcType="INTEGER" property="storeType" />
+    <result column="store_describe" jdbcType="VARCHAR" property="storeDescribe" />
+    <result column="store_image" jdbcType="VARCHAR" property="storeImage" />
+    <result column="store_appreciate_num" jdbcType="INTEGER" property="storeAppreciateNum" />
+    <result column="store_comment_num" jdbcType="INTEGER" property="storeCommentNum" />
+    <result column="store_date" jdbcType="TIMESTAMP" property="storeDate" />
+    <result column="store_status" jdbcType="INTEGER" property="storeStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    store_id, store_uid, store_name, store_location, store_type, store_describe, store_image, 
+    store_appreciate_num, store_comment_num, store_date, store_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_store
+    where store_id = #{storeId,jdbcType=INTEGER}
+  </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_store
+    where store_id = #{storeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.key.entity.Store">
+    insert into tb_store (store_id, store_uid, store_name, 
+      store_location, store_type, store_describe, 
+      store_image, store_appreciate_num, store_comment_num, 
+      store_date, store_status)
+    values (#{storeId,jdbcType=INTEGER}, #{storeUid,jdbcType=INTEGER}, #{storeName,jdbcType=VARCHAR}, 
+      #{storeLocation,jdbcType=VARCHAR}, #{storeType,jdbcType=INTEGER}, #{storeDescribe,jdbcType=VARCHAR}, 
+      #{storeImage,jdbcType=VARCHAR}, #{storeAppreciateNum,jdbcType=INTEGER}, #{storeCommentNum,jdbcType=INTEGER}, 
+      #{storeDate,jdbcType=TIMESTAMP}, #{storeStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.key.entity.Store">
+    insert into tb_store
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="storeUid != null">
+        store_uid,
+      </if>
+      <if test="storeName != null">
+        store_name,
+      </if>
+      <if test="storeLocation != null">
+        store_location,
+      </if>
+      <if test="storeType != null">
+        store_type,
+      </if>
+      <if test="storeDescribe != null">
+        store_describe,
+      </if>
+      <if test="storeImage != null">
+        store_image,
+      </if>
+      <if test="storeAppreciateNum != null">
+        store_appreciate_num,
+      </if>
+      <if test="storeCommentNum != null">
+        store_comment_num,
+      </if>
+      <if test="storeDate != null">
+        store_date,
+      </if>
+      <if test="storeStatus != null">
+        store_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="storeId != null">
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="storeUid != null">
+        #{storeUid,jdbcType=INTEGER},
+      </if>
+      <if test="storeName != null">
+        #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeLocation != null">
+        #{storeLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="storeType != null">
+        #{storeType,jdbcType=INTEGER},
+      </if>
+      <if test="storeDescribe != null">
+        #{storeDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="storeImage != null">
+        #{storeImage,jdbcType=VARCHAR},
+      </if>
+      <if test="storeAppreciateNum != null">
+        #{storeAppreciateNum,jdbcType=INTEGER},
+      </if>
+      <if test="storeCommentNum != null">
+        #{storeCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="storeDate != null">
+        #{storeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storeStatus != null">
+        #{storeStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.key.entity.Store">
+    update tb_store
+    <set>
+      <if test="storeUid != null">
+        store_uid = #{storeUid,jdbcType=INTEGER},
+      </if>
+      <if test="storeName != null">
+        store_name = #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeLocation != null">
+        store_location = #{storeLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="storeType != null">
+        store_type = #{storeType,jdbcType=INTEGER},
+      </if>
+      <if test="storeDescribe != null">
+        store_describe = #{storeDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="storeImage != null">
+        store_image = #{storeImage,jdbcType=VARCHAR},
+      </if>
+      <if test="storeAppreciateNum != null">
+        store_appreciate_num = #{storeAppreciateNum,jdbcType=INTEGER},
+      </if>
+      <if test="storeCommentNum != null">
+        store_comment_num = #{storeCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="storeDate != null">
+        store_date = #{storeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storeStatus != null">
+        store_status = #{storeStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where store_id = #{storeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.key.entity.Store">
+    update tb_store
+    set store_uid = #{storeUid,jdbcType=INTEGER},
+      store_name = #{storeName,jdbcType=VARCHAR},
+      store_location = #{storeLocation,jdbcType=VARCHAR},
+      store_type = #{storeType,jdbcType=INTEGER},
+      store_describe = #{storeDescribe,jdbcType=VARCHAR},
+      store_image = #{storeImage,jdbcType=VARCHAR},
+      store_appreciate_num = #{storeAppreciateNum,jdbcType=INTEGER},
+      store_comment_num = #{storeCommentNum,jdbcType=INTEGER},
+      store_date = #{storeDate,jdbcType=TIMESTAMP},
+      store_status = #{storeStatus,jdbcType=INTEGER}
+    where store_id = #{storeId,jdbcType=INTEGER}
+  </update>
+
+
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.key.vo.req.StorePageReqVO">
+    select <include refid="Base_Column_List"></include>
+    from tb_store
+    <where>
+      <if test="storeName !=null and storeName != ''">
+        and store_name  like  concat('%',#{storeName},'%')
+      </if>
+      <if test="storeStatus !=null and storeStatus !=''">
+        and store_status =#{storeStatus}
+      </if>
+      <if test="startTime !=null and startTime !=''">
+        and store_date  &gt;= #{startTime}
+      </if>
+      <if test="endTime !=null and endTime !=''">
+        and store_date  &lt;= #{endTime}
+      </if>
+    </where>
+  </select>
+
+</mapper>

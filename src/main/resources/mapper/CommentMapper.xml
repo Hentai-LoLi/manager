@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.key.mapper.CommentMapper" >
+  <resultMap id="BaseResultMap" type="com.key.entity.Comment" >
+    <id column="comment_id" property="commentId" jdbcType="INTEGER" />
+    <result column="comment_uid" property="commentUid" jdbcType="INTEGER" />
+    <result column="comment_content" property="commentContent" jdbcType="CHAR" />
+    <result column="comment_uided" property="commentUided" jdbcType="INTEGER" />
+    <result column="comment_food_circle_id" property="commentFoodCircleId" jdbcType="INTEGER" />
+    <result column="comment_date" property="commentDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    comment_id, comment_uid, comment_content, comment_uided, comment_food_circle_id, comment_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_comment
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_comment
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.key.entity.Comment" >
+    insert into tb_comment (comment_id, comment_uid, comment_content, 
+      comment_uided, comment_food_circle_id, comment_date
+      )
+    values (#{commentId,jdbcType=INTEGER}, #{commentUid,jdbcType=INTEGER}, #{commentContent,jdbcType=CHAR}, 
+      #{commentUided,jdbcType=INTEGER}, #{commentFoodCircleId,jdbcType=INTEGER}, #{commentDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.key.entity.Comment" >
+    insert into tb_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
+        comment_id,
+      </if>
+      <if test="commentUid != null" >
+        comment_uid,
+      </if>
+      <if test="commentContent != null" >
+        comment_content,
+      </if>
+      <if test="commentUided != null" >
+        comment_uided,
+      </if>
+      <if test="commentFoodCircleId != null" >
+        comment_food_circle_id,
+      </if>
+      <if test="commentDate != null" >
+        comment_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
+        #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="commentUid != null" >
+        #{commentUid,jdbcType=INTEGER},
+      </if>
+      <if test="commentContent != null" >
+        #{commentContent,jdbcType=CHAR},
+      </if>
+      <if test="commentUided != null" >
+        #{commentUided,jdbcType=INTEGER},
+      </if>
+      <if test="commentFoodCircleId != null" >
+        #{commentFoodCircleId,jdbcType=INTEGER},
+      </if>
+      <if test="commentDate != null" >
+        #{commentDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.key.entity.Comment" >
+    update tb_comment
+    <set >
+      <if test="commentUid != null" >
+        comment_uid = #{commentUid,jdbcType=INTEGER},
+      </if>
+      <if test="commentContent != null" >
+        comment_content = #{commentContent,jdbcType=CHAR},
+      </if>
+      <if test="commentUided != null" >
+        comment_uided = #{commentUided,jdbcType=INTEGER},
+      </if>
+      <if test="commentFoodCircleId != null" >
+        comment_food_circle_id = #{commentFoodCircleId,jdbcType=INTEGER},
+      </if>
+      <if test="commentDate != null" >
+        comment_date = #{commentDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.key.entity.Comment" >
+    update tb_comment
+    set comment_uid = #{commentUid,jdbcType=INTEGER},
+      comment_content = #{commentContent,jdbcType=CHAR},
+      comment_uided = #{commentUided,jdbcType=INTEGER},
+      comment_food_circle_id = #{commentFoodCircleId,jdbcType=INTEGER},
+      comment_date = #{commentDate,jdbcType=TIMESTAMP}
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.key.vo.req.CommentPageReqVO">
+    select <include refid="Base_Column_List"></include>
+    from tb_comment
+    <where>
+      <if test="commentUid !=null">
+        and comment_uid   like  concat('%',#{commentUid},'%')
+      </if>
+
+      <if test="startTime !=null and startTime !=''">
+        and comment_uid   &gt;= #{startTime}
+      </if>
+      <if test="endTime !=null and endTime !=''">
+        and comment_uid   &lt;= #{endTime}
+      </if>
+    </where>
+  </select>
+</mapper>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.key.mapper.CircleMapper" >
+  <resultMap id="BaseResultMap" type="com.key.entity.Circle" >
+    <id column="circle_id" property="circleId" jdbcType="INTEGER" />
+    <result column="circle_content" property="circleContent" jdbcType="VARCHAR" />
+    <result column="circle_image" property="circleImage" jdbcType="VARCHAR" />
+    <result column="circle_comment_num" property="circleCommentNum" jdbcType="INTEGER" />
+    <result column="circle_appreciate_num" property="circleAppreciateNum" jdbcType="INTEGER" />
+    <result column="circle_data" property="circleDate" jdbcType="TIMESTAMP" />
+    <result column="circle_uid" property="circleUid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    circle_id, circle_content, circle_image, circle_comment_num, circle_appreciate_num, circle_data, circle_uid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_circle
+    where circle_id = #{circleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_circle
+    where circle_id = #{circleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.key.entity.Circle" >
+    insert into tb_circle (circle_id, circle_issue, circle_content, 
+      circle_image, circle_comment_num, circle_uid
+      )
+    values (#{circleId,jdbcType=INTEGER}, #{circleIssue,jdbcType=CHAR}, #{circleContent,jdbcType=VARCHAR}, 
+      #{circleImage,jdbcType=VARCHAR}, #{circleCommentNum,jdbcType=INTEGER}, #{circleUid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.key.entity.Circle" >
+    insert into tb_circle
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="circleId != null" >
+        circle_id,
+      </if>
+      <if test="circleIssue != null" >
+        circle_issue,
+      </if>
+      <if test="circleContent != null" >
+        circle_content,
+      </if>
+      <if test="circleImage != null" >
+        circle_image,
+      </if>
+      <if test="circleCommentNum != null" >
+        circle_comment_num,
+      </if>
+      <if test="circleUid != null" >
+        circle_uid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="circleId != null" >
+        #{circleId,jdbcType=INTEGER},
+      </if>
+      <if test="circleIssue != null" >
+        #{circleIssue,jdbcType=CHAR},
+      </if>
+      <if test="circleContent != null" >
+        #{circleContent,jdbcType=VARCHAR},
+      </if>
+      <if test="circleImage != null" >
+        #{circleImage,jdbcType=VARCHAR},
+      </if>
+      <if test="circleCommentNum != null" >
+        #{circleCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="circleUid != null" >
+        #{circleUid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.key.entity.Circle" >
+    update tb_circle
+    <set >
+      <if test="circleIssue != null" >
+        circle_issue = #{circleIssue,jdbcType=CHAR},
+      </if>
+      <if test="circleContent != null" >
+        circle_content = #{circleContent,jdbcType=VARCHAR},
+      </if>
+      <if test="circleImage != null" >
+        circle_image = #{circleImage,jdbcType=VARCHAR},
+      </if>
+      <if test="circleCommentNum != null" >
+        circle_comment_num = #{circleCommentNum,jdbcType=INTEGER},
+      </if>
+      <if test="circleUid != null" >
+        circle_uid = #{circleUid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where circle_id = #{circleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.key.entity.Circle" >
+    update tb_circle
+    set circle_issue = #{circleIssue,jdbcType=CHAR},
+      circle_content = #{circleContent,jdbcType=VARCHAR},
+      circle_image = #{circleImage,jdbcType=VARCHAR},
+      circle_comment_num = #{circleCommentNum,jdbcType=INTEGER},
+      circle_uid = #{circleUid,jdbcType=INTEGER}
+    where circle_id = #{circleId,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.key.vo.req.CirclePageReqVO">
+    select <include refid="Base_Column_List"></include>
+    from tb_circle
+    <where>
+      <if test="circleUid !=null">
+        and circle_uid  like  concat('%',#{circleUid},'%')
+      </if>
+
+      <if test="startTime !=null and startTime !=''">
+        and circle_data   &gt;= #{startTime}
+      </if>
+      <if test="endTime !=null and endTime !=''">
+        and circle_data   &lt;= #{endTime}
+      </if>
+    </where>
+  </select>
+</mapper>

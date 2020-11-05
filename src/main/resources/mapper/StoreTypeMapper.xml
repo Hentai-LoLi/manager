@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.key.mapper.StoreTypeMapper">
+  <resultMap id="BaseResultMap" type="com.key.entity.StoreType">
+    <id column="sts_id" jdbcType="INTEGER" property="stsId" />
+    <result column="sts_name" jdbcType="VARCHAR" property="stsName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sts_id, sts_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_sts
+    where sts_id = #{stsId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_sts
+    where sts_id = #{stsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.key.entity.StoreType">
+    insert into tb_sts (sts_id, sts_name)
+    values (#{stsId,jdbcType=INTEGER}, #{stsName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.key.entity.StoreType">
+    insert into tb_sts
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stsId != null">
+        sts_id,
+      </if>
+      <if test="stsName != null">
+        sts_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stsId != null">
+        #{stsId,jdbcType=INTEGER},
+      </if>
+      <if test="stsName != null">
+        #{stsName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.key.entity.StoreType">
+    update tb_sts
+    <set>
+      <if test="stsName != null">
+        sts_name = #{stsName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sts_id = #{stsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.key.entity.StoreType">
+    update tb_sts
+    set sts_name = #{stsName,jdbcType=VARCHAR}
+    where sts_id = #{stsId,jdbcType=INTEGER}
+  </update>
+
+
+  <!-- @Description:     根据条件查询所有店铺类型数据-->
+  <select id="selectAll" resultType="com.key.entity.StoreType" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from tb_sts
+    <where>
+      <if test="stsName !=null and stsName !=''">
+        and sts_name like  concat('%',#{stsName},'%')
+      </if>
+    </where>
+  </select>
+</mapper>

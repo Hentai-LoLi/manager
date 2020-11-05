@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.key.mapper.FoodTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.key.entity.FoodType" >
+    <id column="fts_id" property="ftsId" jdbcType="INTEGER" />
+    <result column="fts_sid" property="ftsSid" jdbcType="INTEGER" />
+    <result column="fts_name" property="ftsName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    fts_id, fts_sid, fts_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_fts
+    where fts_id = #{ftsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_fts
+    where fts_id = #{ftsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.key.entity.FoodType" >
+    insert into tb_fts (fts_id, fts_sid, fts_name
+      )
+    values (#{ftsId,jdbcType=INTEGER}, #{ftsSid,jdbcType=INTEGER}, #{ftsName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.key.entity.FoodType" >
+    insert into tb_fts
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ftsId != null" >
+        fts_id,
+      </if>
+      <if test="ftsSid != null" >
+        fts_sid,
+      </if>
+      <if test="ftsName != null" >
+        fts_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ftsId != null" >
+        #{ftsId,jdbcType=INTEGER},
+      </if>
+      <if test="ftsSid != null" >
+        #{ftsSid,jdbcType=INTEGER},
+      </if>
+      <if test="ftsName != null" >
+        #{ftsName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.key.entity.FoodType" >
+    update tb_fts
+    <set >
+      <if test="ftsSid != null" >
+        fts_sid = #{ftsSid,jdbcType=INTEGER},
+      </if>
+      <if test="ftsName != null" >
+        fts_name = #{ftsName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where fts_id = #{ftsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.key.entity.FoodType" >
+    update tb_fts
+    set fts_sid = #{ftsSid,jdbcType=INTEGER},
+      fts_name = #{ftsName,jdbcType=VARCHAR}
+    where fts_id = #{ftsId,jdbcType=INTEGER}
+  </update>
+
+
+  <!-- @Description:     根据条件查询所有商品类型数据-->
+  <select id="selectAll" resultType="com.key.entity.FoodType" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from tb_fts
+    <where>
+      <if test="ftsName !=null and ftsName !=''">
+        and fts_name like  concat('%',#{ftsName},'%')
+      </if>
+    </where>
+  </select>
+</mapper>
